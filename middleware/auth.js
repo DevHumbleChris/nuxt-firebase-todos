@@ -3,10 +3,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     if(!user) {
         return navigateTo({
-            path: '/login',
-            query: {
-                redirect: to.fullPath
-            }
+            path: '/login'
         })
     }
 })

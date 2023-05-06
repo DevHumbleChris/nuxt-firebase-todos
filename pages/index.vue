@@ -2,7 +2,8 @@
 import { ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 definePageMeta({
-    middleware: ['auth']
+    middleware: ['auth'],
+    title: 'Nuxt-Firebase Todos'
 })
 
 const todo = useState('todo', () => '')
