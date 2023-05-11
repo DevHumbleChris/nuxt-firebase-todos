@@ -10,6 +10,9 @@ export default defineNuxtConfig({
       messagingSenderId: process.env.messagingSenderId,
       appId: process.env.appId,
     },
+    admin: {
+      serviceAccount: './serviceAccount.json'
+    },
     auth: true
   },
   tailwindcss: {
