@@ -1,14 +1,29 @@
 <script setup>
 import { ChevronDownIcon } from '@heroicons/vue/24/outline'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 
-definePageMeta({
-    middleware: ['auth'],
+useHead({
     title: 'Nuxt-Firebase Todos'
 })
 
+definePageMeta({
+    middleware: ['auth']
+})
+
 const todo = useState('todo', () => '')
-const addTodos = () => {
-    console.log(todo.value)
+const user = useCurrentUser()
+const db = useFirestore()
+
+const addTodos = async () => {
+    const docRef = await addDoc(collection(db, 'todos'), {
+        task: todo.value,
+        isCompleted: false,
+        userUID: user.value.uid,
+        timestamp: serverTimestamp()
+    })
+    if (docRef) {
+        todo.value = ''
+    }
 }
 </script>
 

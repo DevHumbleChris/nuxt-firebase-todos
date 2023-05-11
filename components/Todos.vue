@@ -1,17 +1,28 @@
 <script setup>
 import { useCollection, useFirestore } from 'vuefire'
-import { collection } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 
 const db = useFirestore()
+const todos = useState('todos', () => [])
 
-const todos = useCollection(collection(db, 'todos'))
-console.log(todos.value)
+watchEffect(() => {
+  const q = query(collection(db, "todos"), orderBy("timestamp", "desc"));
+  const unsub = onSnapshot(q, (querySnapshot) => {
+    const userTodos = []
+    querySnapshot.forEach(doc => {
+      userTodos.push({ ...doc.data(), id: doc.id })
+    })
+    todos.value = userTodos
+    console.log(todos.value)
+  })
+  return () => unsub()
+})
 </script>
 
 <template>
     <div>
-        <div>
-            <Todo />
+        <div v-if="todos.length > 0">
+            <Todo v-for="todo in todos" :key="todo.id" :todo="todo"/>
         </div>
         <div class="bg-white p-2 border-b shadow-slate-400 shadow-lg flex justify-between text-xs sm:text-sm items-center text-gray-500">
             <button>0 item left</button>
