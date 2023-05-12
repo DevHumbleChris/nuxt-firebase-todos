@@ -2,8 +2,8 @@
 import { useFirebaseAuth } from 'vuefire'
 import { GoogleAuthProvider, signInWithPopup, GithubAuthProvider } from 'firebase/auth'
 
-definePageMeta({
-    title: 'Nuxt-Firebase Todos - Login'
+useHead({
+    title: 'Nuxt Firebase Todos'
 })
 
 const errorMessage = useState('errorMessage', () => '')
@@ -12,6 +12,15 @@ const isAuthenticating = useState('isAuthenticating', () => false)
 const auth = useFirebaseAuth()
 const googleProvider = new GoogleAuthProvider()
 const githubProvider = new GithubAuthProvider()
+
+onBeforeMount(async () => {
+    const user = await getCurrentUser()
+    if (user) {
+        navigateTo({
+            path: '/'
+        })
+    }
+})
 
 const signWithGoogle = () => {
     isAuthenticating.value = !isAuthenticating.value
