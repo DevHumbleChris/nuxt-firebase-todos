@@ -6,21 +6,16 @@ useHead({
     title: 'Nuxt Firebase Todos'
 })
 
+definePageMeta({
+    middleware: ['user']
+})
+
 const errorMessage = useState('errorMessage', () => '')
 const isAuthenticating = useState('isAuthenticating', () => false)
 
 const auth = useFirebaseAuth()
 const googleProvider = new GoogleAuthProvider()
 const githubProvider = new GithubAuthProvider()
-
-onBeforeMount(async () => {
-    const user = await getCurrentUser()
-    if (user) {
-        navigateTo({
-            path: '/'
-        })
-    }
-})
 
 const signWithGoogle = () => {
     isAuthenticating.value = !isAuthenticating.value

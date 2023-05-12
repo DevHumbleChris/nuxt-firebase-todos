@@ -1,6 +1,6 @@
 <script setup>
-import { useCollection, useFirestore } from 'vuefire'
-import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { useFirestore } from 'vuefire'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 
 const db = useFirestore()
 const todos = useState('todos', () => [])
