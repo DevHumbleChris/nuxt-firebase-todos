@@ -25,7 +25,7 @@ watchEffect(() => {
             <Todo v-for="todo in todos" :key="todo.id" :todo="todo"/>
         </div>
         <div class="bg-white p-2 border-b shadow-slate-400 shadow-lg flex justify-between text-xs sm:text-sm items-center text-gray-500">
-            <button>0 item left</button>
+            <button>{{ todos?.length }} item left</button>
             <div class="flex space-x-2 justify-between">
                 <button class="p-0.5 hover:border-red-300 hover:border rounded">All</button>
                 <button class="p-0.5 hover:border-red-300 hover:border rounded">Active</button>

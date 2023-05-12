@@ -1,5 +1,6 @@
 <script setup>
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/outline'
+import { doc, updateDoc } from 'firebase/firestore'
 
 const props = defineProps({
     todo: Object
@@ -8,6 +9,12 @@ const props = defineProps({
 const todo = computed(() => {
     return props?.todo
 })
+
+const markDone = async () => {
+    await updateDoc(doc(db, 'todos', todo?.value.id), {
+        isCompleted: !false
+    })
+}
 </script>
 
 <template>
@@ -15,7 +22,7 @@ const todo = computed(() => {
         <div>{{ todo?.task }}</div>
         <div class="space-x-1">
             <button>
-                <CheckCircleIcon class="w-7 text-green-600" />
+                <CheckCircleIcon @click="markDone" class="w-7 text-green-600" />
             </button>
             <button>
                 <XCircleIcon class="w-7 text-red-600" />
